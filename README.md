@@ -1,6 +1,5 @@
 <p align="center">
   <img src="https://github.com/user-attachments/assets/9e971e7b-7144-497d-8f65-e3ae50a677ee" width="300"/>
-  <img src="assets/brook-one-piece.gif" width="300"/>
 </p>
 
 
@@ -26,6 +25,9 @@ O **GameBot** é um chatbot para Telegram capaz de responder perguntas sobre per
 * 🔍 **Pré-processamento avançado** — lematização, stopwords e NER
 
 ---
+<p align="center">
+<img src="src/assets/brook-one-piece.gif" width="300"/>
+</p>
 
 ## 🗂️ Estrutura do projeto
 
