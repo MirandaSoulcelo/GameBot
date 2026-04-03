@@ -12,7 +12,7 @@
 
 ## ✨ O que esse projeto faz
 
-O **GameBot** é um chatbot para Telegram capaz de responder perguntas sobre personagens, franquias, empresas, gameplay, história e muito mais do mundo dos games. Ele suporta tanto **texto** quanto **mensagens de voz**, e funciona em **português e inglês**.
+O **GameBot** é um chatbot para Telegram capaz de responder perguntas sobre personagens, franquias, empresas, gameplay, história e muito mais do mundo dos gamesda senhorita N. Ele suporta tanto **texto** quanto **mensagens de voz**, e funciona em **português e inglês**.
 
 ### Funcionalidades principais
 
