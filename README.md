@@ -6,7 +6,7 @@
 
 # 🎮 GameBot — Chatbot Inteligente sobre Jogos
 
-> Bot do Telegram com NLP, reconhecimento de voz e base de conhecimento construída com web scraping — tudo focado no universo gamer.
+> Bot do Telegram com NLP, reconhecimento de voz e base de conhecimento construída com web scraping — tudo focado no universo da senhorita N e kingdom Hearts porque o criador desse bot é apaixonado.
 
 ---
 
