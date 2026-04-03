@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://github.com/user-attachments/assets/9e971e7b-7144-497d-8f65-e3ae50a677ee" width="300" style="margin-right: 20px;"/>
-  <img src="src/assets/brook.gif" width="300"/>
+  <img src="src/assets/brook-one-piece.gif" width="300"/>
 </p>
 
 
