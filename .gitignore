@@ -1,0 +1,11 @@
+venv/
+.env
+__pycache__/
+*.pyc
+
+# Áudios temporários gerados pelo bot
+*.ogg
+
+# Bases de conhecimento (são grandes e regeneráveis com o builder)
+knowledge_base_en.json
+knowledge_base_pt.json

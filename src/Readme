@@ -1,0 +1,124 @@
+Aqui está o README:
+markdown# 🎮 GameBot — Chatbot Inteligente sobre Jogos
+
+> Bot do Telegram com NLP, reconhecimento de voz e base de conhecimento construída com web scraping — tudo focado no universo gamer.
+
+---
+
+## ✨ O que esse projeto faz
+
+O **GameBot** é um chatbot para Telegram capaz de responder perguntas sobre personagens, franquias, empresas, gameplay, história e muito mais do mundo dos games. Ele suporta tanto **texto** quanto **mensagens de voz**, e funciona em **português e inglês**.
+
+### Funcionalidades principais
+
+- 🧠 **Motor NLP próprio** — combina TF-IDF + similaridade vetorial (spaCy) para encontrar as respostas mais relevantes
+- 🎙️ **Reconhecimento de voz** — transcreve áudios enviados no Telegram usando Whisper (OpenAI)
+- 🌐 **Base de conhecimento dinâmica** — construída via web scraping de wikis especializadas (MarioWiki, ZeldaWiki, Bulbapedia, Wikipedia)
+- 🗣️ **Bilíngue** — detecta automaticamente se a pergunta é em PT ou EN e responde no mesmo idioma
+- 🎯 **Detecção de intenção** — classifica a pergunta em categorias como personagens, gameplay, lore, habilidades, crossovers etc.
+- 🔍 **Pré-processamento avançado** — lematização, remoção de stopwords e reconhecimento de entidades (NER)
+
+---
+
+## 🗂️ Estrutura do projeto
+├── bot.py                  # Entry point — integração com Telegram
+├── nlp_engine.py           # Motor de busca e resposta (TF-IDF + spaCy)
+├── knowledge_base_builder.py  # Constrói as KBs via scraping
+├── web_scraper.py          # Scraper das wikis
+├── knowledge_base_en.json  # Base de conhecimento em inglês (gerada)
+├── knowledge_base_pt.json  # Base de conhecimento em português (gerada)
+└── .env                    # Token do Telegram (não versionar!)
+
+---
+
+## ⚙️ Como rodar
+
+### 1. Clone o repositório
+```bash
+git clone https://github.com/seu-usuario/gamebot.git
+cd gamebot
+```
+
+### 2. Crie e ative um ambiente virtual
+```bash
+python -m venv venv
+source venv/bin/activate        # Linux/macOS
+venv\Scripts\activate           # Windows
+```
+
+### 3. Instale as dependências
+```bash
+pip install -r requirements.txt
+```
+
+> **Dependências principais:** `python-telegram-bot`, `spacy`, `scikit-learn`, `langdetect`, `nltk`, `openai-whisper`, `beautifulsoup4`, `requests`, `python-dotenv`
+
+### 4. Baixe os modelos do spaCy
+```bash
+python -m spacy download en_core_web_lg
+python -m spacy download pt_core_news_lg
+```
+
+### 5. Configure o token do Telegram
+
+Crie um arquivo `.env` na raiz do projeto:
+```env
+TELEGRAM_TOKEN=seu_token_aqui
+```
+
+> Obtenha seu token criando um bot via [@BotFather](https://t.me/BotFather) no Telegram.
+
+### 6. Gere a base de conhecimento
+```bash
+python knowledge_base_builder.py
+```
+
+> ⚠️ Esse passo faz scraping de várias wikis e pode levar alguns minutos. Ele gera os arquivos `knowledge_base_en.json` e `knowledge_base_pt.json`.
+
+### 7. Inicie o bot
+```bash
+python bot.py
+```
+
+---
+
+## 💬 Como usar
+
+Abra o seu bot no Telegram e:
+
+- **Envie uma mensagem de texto** com sua pergunta sobre games
+- **Envie um áudio** — o bot transcreve e responde automaticamente
+- Funciona em **português** e **inglês**
+
+**Exemplos de perguntas:**
+Quem é o Bowser?
+What are Sonic's abilities?
+Qual a história de Kingdom Hearts?
+Quem criou a Nintendo?
+
+---
+
+## 🧩 Categorias de conhecimento suportadas
+
+| Categoria | Exemplos |
+|---|---|
+| 👤 Personagens | Mario, Link, Sonic, Pikachu, Sora |
+| 🏢 Empresas | Nintendo, Sega, Capcom |
+| 📦 Franquias | Super Mario, Zelda, Pokémon, Kingdom Hearts |
+| 🎮 Gameplay | Mecânicas, controles, jogabilidade |
+| 📖 História & Lore | Enredo, narrativa, universo |
+| ⚡ Habilidades | Poderes, golpes, ataques especiais |
+| 🌍 Mundos | Hyrule, Kanto, universos fictícios |
+| 🔀 Crossovers | Aparições em outros jogos |
+
+---
+
+## 📸 Screenshots
+
+> *(em breve — imagens das features em ação)*
+
+---
+
+## 📄 Licença
+
+MIT — fique à vontade para usar, modificar e contribuir.
