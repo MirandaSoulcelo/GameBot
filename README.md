@@ -1,3 +1,9 @@
+  <img width="433" height="348" alt="image" src="https://github.com/user-attachments/assets/9e971e7b-7144-497d-8f65-e3ae50a677ee" />
+
+
+
+
+
 # 🎮 GameBot — Chatbot Inteligente sobre Jogos
 
 > Bot do Telegram com NLP, reconhecimento de voz e base de conhecimento construída com web scraping — tudo focado no universo gamer.
@@ -16,6 +22,14 @@ O **GameBot** é um chatbot para Telegram capaz de responder perguntas sobre per
 * 🗣️ **Bilíngue** — detecta automaticamente se a pergunta é em PT ou EN
 * 🎯 **Detecção de intenção** — classifica perguntas em categorias
 * 🔍 **Pré-processamento avançado** — lematização, stopwords e NER
+
+* Algumas ScreenShots como prévia dessa mirabolância Mirabolótica
+ <img width="1059" height="459" alt="image" src="https://github.com/user-attachments/assets/ea97d73d-dab0-4ab6-b96f-766dd0639682" />
+ <img width="877" height="776" alt="image" src="https://github.com/user-attachments/assets/6bc9af0b-5570-4865-b249-25ffc978cd0a" />
+ <img width="1437" height="838" alt="image" src="https://github.com/user-attachments/assets/1a905c99-dd78-40e6-9786-e9b0d3cd8864" />
+
+
+
 
 ---
 
