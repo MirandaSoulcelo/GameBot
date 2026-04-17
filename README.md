@@ -75,6 +75,7 @@ python -m spacy download pt_core_news_lg
 
 ### 5. Configure o token do Telegram
 Observação: Será necessário criar um bot no próprio telegram via Botfather
+
 Crie um `.env`:
 
 ```env
