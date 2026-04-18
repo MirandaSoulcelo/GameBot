@@ -28,6 +28,22 @@ def transcribe_audio(file_path):
     result = model.transcribe(file_path)
     return result["text"]
 
+def buscar_gif_inteligente(entities, topic):
+    for entity in entities:
+        
+        palavras_ruido = {"personagem", "character", "the", "of", "de", "o", "a"}
+        entity_limpa = " ".join(
+            w for w in entity.split() if w not in palavras_ruido
+        ).strip()
+        
+        if not entity_limpa:
+            continue
+            
+        gif = buscar_gif(entity_limpa)
+        if gif:
+            return gif
+    
+    return buscar_gif(topic)
 
 async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE):
     file = await update.message.voice.get_file()
@@ -41,8 +57,8 @@ async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     print(f"Transcrição: {texto}")
 
-    resposta, topic = await asyncio.to_thread(bot_nlp.answer, texto, 0.2, 3, "pt")
-    gif_url = buscar_gif(topic)
+    resposta, topic, entities = await asyncio.to_thread(bot_nlp.answer, texto, 0.2, 3, "pt")
+    gif_url = buscar_gif_inteligente(entities, topic)
     if gif_url:
         await update.message.reply_animation(gif_url)
     await update.message.reply_text(f"🧠 Você disse: {texto}\n\n{resposta}")
@@ -64,11 +80,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     print(f"Usuário: {user_text}")
 
-    resposta, topic = await asyncio.to_thread(bot_nlp.answer, user_text, 0.2, 3, "pt")
-
-    print(f"Bot: {resposta}")
-
-    gif_url = buscar_gif(topic)
+    resposta, topic, entities = await asyncio.to_thread(bot_nlp.answer, user_text, 0.2, 3, "pt")
+    gif_url = buscar_gif_inteligente(entities, topic)
     if gif_url:
         await update.message.reply_animation(gif_url)
 

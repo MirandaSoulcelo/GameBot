@@ -95,6 +95,7 @@ def build_knowledge_base():
         ("https://pt.wikipedia.org/wiki/Shadow_the_Hedgehog)",         "Shadow"),
         ("https://pt.wikipedia.org/wiki/Lista_de_personagens_de_Sonic_the_Hedgehog",         "Knuckles"),
         ("https://pt.wikipedia.org/wiki/Lista_de_personagens_de_Sonic_the_Hedgehog",         "Eggman"),
+        ("https://pt.wikipedia.org/wiki/Charizard",         "Charizard"),
         ("https://pt.wikipedia.org/wiki/Tails",         "Tails"),
         ("https://pt.wikipedia.org/wiki/Super_Smash_Bros.",                      "Super smash bros"),
         ("https://pt.wikipedia.org/wiki/Chrono_Trigger",                      "Chrono Trigger"),

@@ -151,10 +151,13 @@ class NLPEngine:
         print(f"[DEBUG] idioma={language} | intenção={intent}")
 
         entities = self.extract_entities(user_text, language)
-
+        sw = STOPWORDS_PT if language == "pt" else STOPWORDS_EN
+        
         if not entities:
-            sw = STOPWORDS_PT if language == "pt" else STOPWORDS_EN
-            entities = [w for w in user_text.lower().split() if w not in sw and len(w) > 2]
+            entities = [w for w in user_text.split() if w[0].isupper() and w.lower() not in sw]
+        
+        if not entities:
+            entities = [w.lower() for w in user_text.split() if w.lower() not in sw and len(w) > 2]
 
         if not entities:
             entities = [w for w in user_text.lower().split() if len(w) > 1]
@@ -173,7 +176,8 @@ class NLPEngine:
             filtered = all_blocks
 
         if not filtered:
-            return no_answer, "video game"
+            return no_answer, "video game", []
+
 
         sentences_pool = [b["text"]  for b in filtered]
         topics_pool    = [b["topic"] for b in filtered]
@@ -227,7 +231,7 @@ class NLPEngine:
                 break
 
         if not results or combined[sorted_idx[0]] < threshold:
-            return no_answer, "video game"
+            return no_answer, "video game", []
 
         best_topic = topics_pool[sorted_idx[0]]
-        return "\n\n".join(results), best_topic
+        return "\n\n".join(results), best_topic, entities
