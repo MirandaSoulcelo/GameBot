@@ -93,10 +93,7 @@ def is_valid_sentence(sentence):
 
 
 def remove_stopwords(sentence, language="pt"):
-    """
-    Remove stop words usando NLTK — requisito explícito da disciplina.
-    Retorna a frase limpa (usada no pré-processamento da KB).
-    """
+
     sw = STOPWORDS_PT if language == "pt" else STOPWORDS_EN
     words = sentence.lower().split()
     filtered = [w for w in words if w not in sw]
@@ -104,10 +101,7 @@ def remove_stopwords(sentence, language="pt"):
 
 
 def heading_to_intent(heading_text):
-    """
-    Converte o texto de um heading (h2/h3) em uma intenção.
-    Muito mais confiável que matching de substrings em frases.
-    """
+
     h = heading_text.lower().strip()
     for key, intent in SECTION_TO_INTENT.items():
         if key in h:
@@ -116,17 +110,21 @@ def heading_to_intent(heading_text):
 
 
 def classify_sentence_fallback(sentence):
-    """
-    Classificador de fallback por substring — usado apenas quando
-    a página não tem headings claros (ex: Wikipedia genérica).
-    """
+
     s = sentence.lower()
 
     if any(x in s for x in [
         "character", "antagonist", "is the protagonist", "main character",
-        "protagonist", "playable character", "mascot",
-        "é um personagem", "é a protagonista", "personagem fictício",
+        "protagonist", "playable character", "mascot", "is a character",
+        "é um personagem", "é a protagonista", "personagem fictício", "É uma personagem",
         "personagem jogável", "mascote da"
+    ]):
+        return "personagens"
+    
+    if any(x in s for x in [
+        "has a", "caught", "evolved", "trained by",
+        "owns a", "his partner", "her partner",
+        "tem um", "capturou", "evoluiu", "treinado por"
     ]):
         return "personagens"
 

@@ -27,10 +27,10 @@ def scrape_page(url, topic, language="english"):
         )
 
         paragraphs = content.find_all("p")
-        print(f"  [DEBUG] Parágrafos encontrados: {len(paragraphs)}")
+        print(f"  Parágrafos encontrados: {len(paragraphs)}")
 
         if not paragraphs:
-            print(f"  [AVISO] Nenhum parágrafo encontrado em: {url}")
+            print(f"   Nenhum parágrafo encontrado em: {url}")
             return blocks
 
         for tag in content.find_all(["h2", "h3", "p"]):

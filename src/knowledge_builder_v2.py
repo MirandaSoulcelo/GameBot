@@ -9,10 +9,7 @@ DetectorFactory.seed = 0
 
 
 def empty_kb():
-    """
-    A KB armazena blocos (dicionários) em vez de frases soltas.
-    Cada bloco carrega: topic, source, intent e text.
-    """
+    
     return {
         "personagens":    [],
         "franquias":      [],
@@ -34,9 +31,10 @@ def build_knowledge_base():
         ("https://www.mariowiki.com/Luigi",                                "Luigi"),
         ("https://www.mariowiki.com/Princess_Peach",                       "Princess Peach"),
         ("https://www.mariowiki.com/Bowser",                               "Bowser"),
-        ("https://zeldawiki.gg/wiki/Link",                                 "Link"),
-        ("https://zeldawiki.gg/wiki/Zelda",                                "Princess Zelda"),
-        ("https://zeldawiki.gg/wiki/Ganondorf",                            "Ganondorf"),
+        ("https://en.wikipedia.org/wiki/Link_(personagem)",       "Link"),
+        ("https://en.wikipedia.org/wiki/Princess_Zelda",                   "Princess Zelda"),
+        ("https://en.wikipedia.org/wiki/Ganondorf",                        "Ganondorf"),
+        ("https://en.wikipedia.org/wiki/Hyrule",                           "Hyrule"),
         ("https://en.wikipedia.org/wiki/Sonic_the_Hedgehog_(character)",   "Sonic"),
         ("https://en.wikipedia.org/wiki/Tails_(Sonic_the_Hedgehog)",       "Tails"),
         ("https://en.wikipedia.org/wiki/Sora_(Kingdom_Hearts)",            "Sora"),
@@ -44,6 +42,23 @@ def build_knowledge_base():
         ("https://bulbapedia.bulbagarden.net/wiki/Charizard_(Pok%C3%A9mon)", "Charizard"),
         ("https://bulbapedia.bulbagarden.net/wiki/Mewtwo_(Pok%C3%A9mon)",  "Mewtwo"),
         ("https://www.mariowiki.com/Donkey_Kong",                          "Donkey Kong"),
+        ("https://en.wikipedia.org/wiki/Ventus_(Kingdom_Hearts)",          "Ventus"),
+        ("https://en.wikipedia.org/wiki/Aqua_(Kingdom_Hearts)",            "Aqua"),
+        ("https://en.wikipedia.org/wiki/Riku_(Kingdom_Hearts)",            "Riku"),
+        ("https://en.wikipedia.org/wiki/Xion_(Kingdom_Hearts)",            "Xion"),
+        ("https://en.wikipedia.org/wiki/Namin%C3%A9",                      "Namine"),
+        ("https://en.wikipedia.org/wiki/Vanitas_(Kingdom_Hearts)",         "Vanitas"),
+        ("https://en.wikipedia.org/wiki/Roxas_(Kingdom_Hearts)",         "Roxas"),
+        ("https://en.wikipedia.org/wiki/Shadow_the_Hedgehog)",         "Shadow"),
+        ("https://en.wikipedia.org/wiki/Lista_de_personagens_de_Sonic_the_Hedgehog",         "Knuckles"),
+        ("https://en.wikipedia.org/wiki/Lista_de_personagens_de_Sonic_the_Hedgehog",         "Eggman"),
+        ("https://en.wikipedia.org/wiki/Tails",         "Tails"),
+        ("https://wikirby.com/wiki/Kirby",                                 "Kirby"),
+        ("https://en.wikipedia.org/wiki/Kirby_(character)",                "Kirby"),
+        ("https://en.wikipedia.org/wiki/Star_Fox_(character)",             "Star Fox"),
+        ("https://en.wikipedia.org/wiki/Fox_McCloud",                      "Fox McCloud"),
+        ("https://en.wikipedia.org/wiki/Super_Smash_Bros.",                      "Super smash bros"),
+        ("https://en.wikipedia.org/wiki/Chrono_Trigger",                      "Chrono Trigger"),
         # franquias
         ("https://en.wikipedia.org/wiki/Super_Mario",                      "Super Mario Franchise"),
         ("https://en.wikipedia.org/wiki/The_Legend_of_Zelda",             "Zelda Franchise"),
@@ -68,6 +83,21 @@ def build_knowledge_base():
         ("https://pt.wikipedia.org/wiki/Pikachu",                          "Pikachu"),
         ("https://pt.wikipedia.org/wiki/Sora_(Kingdom_Hearts)",            "Sora"),
         ("https://pt.wikipedia.org/wiki/Donkey_Kong",                      "Donkey Kong"),
+        ("https://pt.wikipedia.org/wiki/Link_(personagem)",       "Link"),
+        ("https://pt.wikipedia.org/wiki/Princesa_Zelda",                   "Princess Zelda"),
+        ("https://pt.wikipedia.org/wiki/Ganondorf",                        "Ganondorf"),
+        ("https://pt.wikipedia.org/wiki/Hyrule",                           "Hyrule"),
+        ("https://pt.wikipedia.org/wiki/Ventus_(Kingdom_Hearts)",          "Ventus"),
+        ("https://pt.wikipedia.org/wiki/Aqua_(Kingdom_Hearts)",            "Aqua"),
+        ("https://pt.wikipedia.org/wiki/Riku_(Kingdom_Hearts)",            "Riku"),
+        ("https://pt.wikipedia.org/wiki/Xion_(Kingdom_Hearts)",            "Xion"),
+        ("https://pt.wikipedia.org/wiki/Namin%C3%A9",                      "Namine"),
+        ("https://pt.wikipedia.org/wiki/Shadow_the_Hedgehog)",         "Shadow"),
+        ("https://en.wikipedia.org/wiki/Lista_de_personagens_de_Sonic_the_Hedgehog",         "Knuckles"),
+        ("https://pt.wikipedia.org/wiki/Lista_de_personagens_de_Sonic_the_Hedgehog",         "Eggman"),
+        ("https://pt.wikipedia.org/wiki/Tails",         "Tails"),
+        ("https://pt.wikipedia.org/wiki/Super_Smash_Bros.",                      "Super smash bros"),
+        ("https://pt.wikipedia.org/wiki/Chrono_Trigger",                      "Chrono Trigger"),
         # franquias
         ("https://pt.wikipedia.org/wiki/Super_Mario",                      "Super Mario"),
         ("https://pt.wikipedia.org/wiki/The_Legend_of_Zelda",             "Zelda"),
@@ -80,6 +110,14 @@ def build_knowledge_base():
         ("https://pt.wikipedia.org/wiki/Capcom",                           "Capcom"),
         # mundos
         ("https://pt.wikipedia.org/wiki/Kanto_(Pok%C3%A9mon)",            "Kanto"),
+        # Kirby
+        ("https://pt.wikipedia.org/wiki/Kirby_(personagem)",               "Kirby"),
+        ("https://pt.wikipedia.org/wiki/Kirby_(s%C3%A9rie)",               "Kirby"),
+        # Star Fox
+        ("https://pt.wikipedia.org/wiki/Star_Fox_(personagem)",            "Star Fox"),
+        ("https://pt.wikipedia.org/wiki/Star_Fox",                         "Star Fox"),
+        # KH geral (cobre Riku, Kairi e outros secundários)
+        ("https://pt.wikipedia.org/wiki/Kingdom_Hearts",                   "Kingdom Hearts"),
     ]
 
     kb_en = empty_kb()

@@ -166,7 +166,7 @@ class NLPEngine:
             filtered = all_blocks
 
         if not filtered:
-            return no_answer
+            return no_answer, "video game"
 
         sentences_pool = [b["text"]  for b in filtered]
         topics_pool    = [b["topic"] for b in filtered]
@@ -220,6 +220,7 @@ class NLPEngine:
                 break
 
         if not results or combined[sorted_idx[0]] < threshold:
-            return no_answer
+            return no_answer, "video game"
 
-        return "\n\n".join(results)
+        best_topic = topics_pool[sorted_idx[0]]
+        return "\n\n".join(results), best_topic
