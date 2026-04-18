@@ -50,20 +50,24 @@ class NLPEngine:
 
         doc = nlp(sentence.lower())
 
-        tokens = [
-            token.lemma_
-            for token in doc
-            if not token.is_punct
-            and not token.is_space
-            and not token.like_num
-            and len(token.text) > 1
-            and not token.is_stop
-        ]
+        entity_texts = {ent.start: ent.text.lower() for ent in doc.ents}
 
-        entities = [ent.text.lower() for ent in doc.ents]
+        tokens = []
+        for token in doc:
+            if token.i in entity_texts:
+                tokens.append(entity_texts[token.i])  # nome próprio: sem lema
+            elif (
+                not token.is_punct
+                and not token.is_space
+                and not token.like_num
+                and len(token.text) > 1
+                and not token.is_stop
+            ):
+                tokens.append(token.lemma_)
 
-        all_tokens = list(set(tokens + entities))
-        return " ".join(all_tokens)
+        multi = [ent.text.lower() for ent in doc.ents if len(ent.text.split()) > 1]
+
+        return " ".join(list(dict.fromkeys(tokens + multi)))
 
     def detect_language(self, text, default_language):
         if len(text.split()) < 2:
@@ -130,7 +134,7 @@ class NLPEngine:
             return doc_a.similarity(doc_b) > 0.85
         return False
 
-    def answer(self, user_text, threshold=0.15, top_k=3, default_language="pt"):
+    def answer(self, user_text, threshold=0.70, top_k=3, default_language="pt"):
 
         language = self.detect_language(user_text, default_language)
         intent   = self.detect_intent(user_text, language)
@@ -151,6 +155,9 @@ class NLPEngine:
         if not entities:
             sw = STOPWORDS_PT if language == "pt" else STOPWORDS_EN
             entities = [w for w in user_text.lower().split() if w not in sw and len(w) > 2]
+
+        if not entities:
+            entities = [w for w in user_text.lower().split() if len(w) > 1]
 
         print(f"[DEBUG] entidades={entities}")
 

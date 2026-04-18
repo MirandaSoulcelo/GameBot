@@ -93,7 +93,7 @@ def build_knowledge_base():
         ("https://pt.wikipedia.org/wiki/Xion_(Kingdom_Hearts)",            "Xion"),
         ("https://pt.wikipedia.org/wiki/Namin%C3%A9",                      "Namine"),
         ("https://pt.wikipedia.org/wiki/Shadow_the_Hedgehog)",         "Shadow"),
-        ("https://en.wikipedia.org/wiki/Lista_de_personagens_de_Sonic_the_Hedgehog",         "Knuckles"),
+        ("https://pt.wikipedia.org/wiki/Lista_de_personagens_de_Sonic_the_Hedgehog",         "Knuckles"),
         ("https://pt.wikipedia.org/wiki/Lista_de_personagens_de_Sonic_the_Hedgehog",         "Eggman"),
         ("https://pt.wikipedia.org/wiki/Tails",         "Tails"),
         ("https://pt.wikipedia.org/wiki/Super_Smash_Bros.",                      "Super smash bros"),
@@ -110,10 +110,8 @@ def build_knowledge_base():
         ("https://pt.wikipedia.org/wiki/Capcom",                           "Capcom"),
         # mundos
         ("https://pt.wikipedia.org/wiki/Kanto_(Pok%C3%A9mon)",            "Kanto"),
-        # Kirby
         ("https://pt.wikipedia.org/wiki/Kirby_(personagem)",               "Kirby"),
         ("https://pt.wikipedia.org/wiki/Kirby_(s%C3%A9rie)",               "Kirby"),
-        # Star Fox
         ("https://pt.wikipedia.org/wiki/Star_Fox_(personagem)",            "Star Fox"),
         ("https://pt.wikipedia.org/wiki/Star_Fox",                         "Star Fox"),
         # KH geral (cobre Riku, Kairi e outros secundários)
