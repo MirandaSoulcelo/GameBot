@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GameBot Arcade</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #0e0e0e;
+            color: #fff;
+            font-family: 'DM Mono', monospace;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        header {
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            border-bottom: 1px solid #1e1e1e;
+            flex-shrink: 0;
+        }
+
+        .logo { font-size: 11px; font-weight: 500; letter-spacing: 0.15em; }
+        .meta { font-size: 10px; color: #555; letter-spacing: 0.08em; }
+
+        #game { flex: 1; width: 100%; background: #000; }
+
+        footer {
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            border-top: 1px solid #1a1a1a;
+            flex-shrink: 0;
+        }
+
+        .keys { display: flex; gap: 16px; }
+
+        .key-hint { font-size: 9px; color: #444; letter-spacing: 0.1em; }
+        .key-hint b { color: #777; font-weight: 500; }
+
+        .status { font-size: 9px; color: #3a7a3a; letter-spacing: 0.1em; }
+    </style>
+
+</head>
+
+<body>
+
+<header>
+    <div class="logo">GAMEBOT</div>
+    <div class="meta">
+        <span>{{ core }}</span>
+        &nbsp;/&nbsp;
+        {{ rom }}
+    </div>
+</header>
+
+<div id="game"></div>
+
+<footer>
+    <div class="keys">
+        <div class="key-hint"><b>↑↓←→</b> mover</div>
+        <div class="key-hint"><b>Z</b> A &nbsp; <b>X</b> B</div>
+        <div class="key-hint"><b>ENTER</b> start</div>
+        <div class="key-hint"><b>ESC</b> menu</div>
+    </div>
+    <div class="status" id="save-status">● running</div>
+</footer>
+
+<script>
+
+window.USER_ID = "{{ user_id }}";
+window.GAME    = "{{ game }}";
+
+EJS_player      = "#game";
+EJS_core        = "{{ core }}";
+EJS_gameUrl     = "{{ rom }}";
+EJS_pathtodata  = "/emulator/data/";
+
+// ─── helpers ─────────────────────────────────────────────────────────────────
+
+function toBase64(uint8) {
+    let binary = "";
+    uint8.forEach(b => binary += String.fromCharCode(b));
+    return btoa(binary);
+}
+
+function fromBase64(b64) {
+    const binary = atob(b64);
+    const uint8  = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) uint8[i] = binary.charCodeAt(i);
+    return uint8;
+}
+
+function setStatus(msg, color) {
+    const el = document.getElementById("save-status");
+    el.textContent = msg;
+    el.style.color = color || "#3a7a3a";
+    if (color) setTimeout(() => { el.textContent = "● running"; el.style.color = "#3a7a3a"; }, 3000);
+}
+
+// ─── cloud save ──────────────────────────────────────────────────────────────
+
+async function cloudSave(type, uint8) {
+    try {
+        setStatus("● saving...", "#a0a030");
+        const res = await fetch(`/save/${window.GAME}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                user_id: window.USER_ID,
+                type:    type,           // "srm" ou "state"
+                data:    toBase64(uint8)
+            })
+        });
+        if (res.ok) {
+            console.log(`[SAVE] ${type} enviado OK`);
+            setStatus("● saved ✓", "#3a7a3a");
+        } else {
+            console.warn(`[SAVE] erro HTTP ${res.status}`);
+            setStatus("● save error", "#aa3333");
+        }
+    } catch(e) {
+        console.error("[SAVE] erro:", e);
+        setStatus("● save error", "#aa3333");
+    }
+}
+
+// ─── cloud load ──────────────────────────────────────────────────────────────
+
+async function cloudLoad() {
+    try {
+        const res  = await fetch(`/load/${window.GAME}?uid=${window.USER_ID}`);
+        const json = await res.json();
+        return json; // { srm: "base64...", state: "base64..." } ou nulls
+    } catch(e) {
+        console.error("[LOAD] erro ao buscar save:", e);
+        return null;
+    }
+}
+
+// ─── on game start ────────────────────────────────────────────────────────────
+
+EJS_onGameStart = async function() {
+
+    const gm = EJS_emulator.gameManager;
+
+    // ── 1. carregar saves do banco ──────────────────────────────────────────
+    const saved = await cloudLoad();
+
+    if (saved) {
+
+        // salvar .srm diretamente no FS do emulador antes de qualquer coisa
+        if (saved.srm) {
+            try {
+                const srmPath = gm.getSaveFilePath();
+                const srmData = fromBase64(saved.srm);
+                gm.FS.writeFile(srmPath, srmData);
+                gm.loadSaveFiles(); // diz pro core recarregar do FS
+                console.log("[LOAD] .srm injetado em:", srmPath);
+            } catch(e) {
+                console.error("[LOAD] erro ao injetar .srm:", e);
+            }
+        }
+
+        // carregar save state por cima (se existir, tem prioridade)
+        if (saved.state) {
+            try {
+                const stateData = fromBase64(saved.state);
+                // pequeno delay pra garantir que o core já inicializou
+                setTimeout(() => {
+                    gm.loadState(stateData);
+                    console.log("[LOAD] save state carregado");
+                }, 1500);
+            } catch(e) {
+                console.error("[LOAD] erro ao carregar state:", e);
+            }
+        }
+    }
+
+    // ── 2. salvar .srm quando o emulador emitir o evento ───────────────────
+    EJS_emulator.on("saveSaveFiles", async function(saveData) {
+        if (!saveData || saveData.length === 0) return;
+        await cloudSave("srm", saveData);
+    });
+
+    // ── 3. interceptar quickSave para capturar save states ─────────────────
+    const originalQuickSave = gm.quickSave.bind(gm);
+
+    gm.quickSave = function(slot) {
+        const ok = originalQuickSave(slot);
+        if (ok) {
+            try {
+                const stateData = gm.getState();
+                cloudSave("state", stateData);
+            } catch(e) {
+                console.error("[SAVE] erro ao capturar state:", e);
+            }
+        }
+        return ok;
+    };
+
+};
+
+</script>
+
+<script src="/emulator/data/loader.js"></script>
+
+</body>
+</html>

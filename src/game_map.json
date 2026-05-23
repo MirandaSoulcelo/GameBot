@@ -1,0 +1,41 @@
+{
+  "mario":          [{ "name": "Super Mario Bros",  "url": "/play/super-mario",     "platform": "GBA" }],
+  "luigi":          [{ "name": "Super Mario Bros",  "url": "/play/super-mario",     "platform": "GBA" }],
+  "bowser":         [{ "name": "Super Mario Bros",  "url": "/play/super-mario",     "platform": "GBA" }],
+  "peach":          [{ "name": "Super Mario Bros",  "url": "/play/super-mario",     "platform": "GBA" }],
+  "princess peach": [{ "name": "Super Mario Bros",  "url": "/play/super-mario",     "platform": "GBA" }],
+  "super mario":    [{ "name": "Super Mario Bros",  "url": "/play/super-mario",     "platform": "GBA" }],
+  "donkey kong":    [{ "name": "Super Mario Bros",  "url": "/play/super-mario",     "platform": "GBA" }],
+  "pokemon":        [
+    { "name": "Pokémon Emerald",   "url": "/play/pokemon-emerald", "platform": "GBA" },
+    { "name": "Pokémon HeartGold", "url": "/play/heartgold",       "platform": "DS"  }
+  ],
+  "pikachu":        [
+    { "name": "Pokémon Emerald",   "url": "/play/pokemon-emerald", "platform": "GBA" },
+    { "name": "Pokémon HeartGold", "url": "/play/heartgold",       "platform": "DS"  }
+  ],
+  "charizard":      [{ "name": "Pokémon Emerald",   "url": "/play/pokemon-emerald", "platform": "GBA" }],
+  "mewtwo":         [{ "name": "Pokémon Emerald",   "url": "/play/pokemon-emerald", "platform": "GBA" }],
+  "kanto":          [{ "name": "Pokémon HeartGold", "url": "/play/heartgold",       "platform": "DS"  }],
+  "johto":          [{ "name": "Pokémon HeartGold", "url": "/play/heartgold",       "platform": "DS"  }],
+  "sora":           [{ "name": "Kingdom Hearts",    "url": "/play/kingdom-hearts",  "platform": "GBA" }],
+  "riku":           [{ "name": "Kingdom Hearts",    "url": "/play/kingdom-hearts",  "platform": "GBA" }],
+  "kingdom hearts": [{ "name": "Kingdom Hearts",    "url": "/play/kingdom-hearts",  "platform": "GBA" }],
+  "street fighter": [{ "name": "Street Fighter",    "url": "/play/street-fighter",  "platform": "GBA" }],
+  "ryu":            [{ "name": "Street Fighter",    "url": "/play/street-fighter",  "platform": "GBA" }],
+  "chun-li":        [{ "name": "Street Fighter",    "url": "/play/street-fighter",  "platform": "GBA" }],
+  "kirby":          [{ "name": "Kirby: Nightmare in Dream Land", "url": "/play/Kirby", "platform": "GBA" }],
+  "meta knight":    [{ "name": "Kirby: Nightmare in Dream Land", "url": "/play/Kirby", "platform": "GBA" }],
+  "sonic":          [{ "name": "Sonic Advance",     "url": "/play/Sonic",           "platform": "GBA" }],
+  "tails":          [{ "name": "Sonic Advance",     "url": "/play/Sonic",           "platform": "GBA" }],
+  "eggman":         [{ "name": "Sonic Advance",     "url": "/play/Sonic",           "platform": "GBA" }],
+  "dr eggman":      [{ "name": "Sonic Advance",     "url": "/play/Sonic",           "platform": "GBA" }],
+  "knuckles":       [{ "name": "Sonic Advance",     "url": "/play/Sonic",           "platform": "GBA" }],
+  "mega man":       [{ "name": "Mega Man Zero",     "url": "/play/Mega-Man",        "platform": "GBA" }],
+  "zero":           [{ "name": "Mega Man Zero",     "url": "/play/Mega-Man",        "platform": "GBA" }],
+  "link":           [],
+  "zelda":          [],
+  "ganondorf":      [],
+  "fox mccloud":    [],
+  "star fox":       []
+}

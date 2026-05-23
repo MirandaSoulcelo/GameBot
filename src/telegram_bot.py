@@ -7,9 +7,20 @@ import os
 from telegram import Update
 from dotenv import load_dotenv
 import requests
-
+import re
 
 load_dotenv()
+
+def injetar_uid(resposta, user_id):
+    def substituir(match):
+        url = match.group(1)
+        if "uid=" in url:
+            url = re.sub(r"uid=[^&\s]*", f"uid={user_id}", url)
+        else:
+            separador = "&" if "?" in url else "?"
+            url = f"{url}{separador}uid={user_id}"
+        return url
+    return re.sub(r"(https?://[^\s]+/play/[^\s]+)", substituir, resposta)
 
 model = whisper.load_model("medium") 
 print("Iniciando NLP...")
@@ -54,10 +65,13 @@ async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("🎧 Processando áudio...")
 
     texto = await asyncio.to_thread(transcribe_audio, file_path)
+    user_id = update.message.from_user.id
 
     print(f"Transcrição: {texto}")
 
     resposta, topic, entities = await asyncio.to_thread(bot_nlp.answer, texto, 0.2, 3, "pt")
+    resposta = injetar_uid(resposta, user_id)
+
     gif_url = buscar_gif_inteligente(entities, topic)
     if gif_url:
         await update.message.reply_animation(gif_url)
@@ -75,13 +89,20 @@ def buscar_gif(topic):
     except Exception:
         return None
 
+
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_text = update.message.text
+    user_id = update.message.from_user.id
 
     print(f"Usuário: {user_text}")
 
+
     resposta, topic, entities = await asyncio.to_thread(bot_nlp.answer, user_text, 0.2, 3, "pt")
+
+    resposta = injetar_uid(resposta, user_id)
+
     gif_url = buscar_gif_inteligente(entities, topic)
+
     if gif_url:
         await update.message.reply_animation(gif_url)
 

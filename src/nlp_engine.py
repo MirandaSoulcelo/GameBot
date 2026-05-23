@@ -6,6 +6,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from langdetect import detect, detect_langs
 from nltk.corpus import stopwords
 import nltk
+import re
 
 nltk.download('stopwords', quiet=True)
 
@@ -26,6 +27,7 @@ class NLPEngine:
 
         self.all_blocks_en = self._flatten(self.kb_en)
         self.all_blocks_pt = self._flatten(self.kb_pt)
+        self.game_map = self.load_game_map()
 
         print("Motor NLP pronto!\n")
 
@@ -88,7 +90,8 @@ class NLPEngine:
             "personagens":   ["quem é", "quem foi", "personagem", "protagonista", "vilão", "herói", "mascote"],
             "empresas":      ["empresa", "desenvolvedora", "quem criou", "quem desenvolveu", "quem publicou"],
             "franquias":     ["franquia", "série", "saga"],
-            "jogos":         ["quais jogos", "lista de jogos", "jogos de", "lançamentos", "jogo lançado"],
+            "jogos": ["quais jogos", "lista de jogos", "jogos de", "lançamentos", "jogo lançado",
+                      "jogo do", "jogo da", "sobre o jogo", "falar do jogo"],
             "gameplay":      ["gameplay", "jogabilidade", "como joga", "como funciona", "mecânicas"],
             "historia_lore": ["história", "lore", "enredo", "historia de", "qual a história"],
             "habilidades":   ["poder", "habilidade", "ataques", "skills", "golpe"],
@@ -134,7 +137,7 @@ class NLPEngine:
             return doc_a.similarity(doc_b) > 0.85
         return False
 
-    def answer(self, user_text, threshold=0.70, top_k=3, default_language="pt"):
+    def answer(self, user_text, threshold=0.40, top_k=3, default_language="pt"):
 
         language = self.detect_language(user_text, default_language)
         intent   = self.detect_intent(user_text, language)
@@ -151,6 +154,9 @@ class NLPEngine:
         print(f"[DEBUG] idioma={language} | intenção={intent}")
 
         entities = self.extract_entities(user_text, language)
+
+        entities = [re.sub(r'[^\w\s]', '', e).lower().strip() for e in entities]
+        entities = [e for e in entities if e]
         sw = STOPWORDS_PT if language == "pt" else STOPWORDS_EN
         
         if not entities:
@@ -232,6 +238,65 @@ class NLPEngine:
 
         if not results or combined[sorted_idx[0]] < threshold:
             return no_answer, "video game", []
+        
 
         best_topic = topics_pool[sorted_idx[0]]
-        return "\n\n".join(results), best_topic, entities
+        full_response = "\n\n".join(results)
+
+        top_blocks = [filtered[idx] for idx in sorted_idx if combined[idx] >= threshold][:top_k]
+    
+        games = self.find_related_game(entities, top_blocks, language)
+
+        if games:
+            if language == "pt":
+                lines = [f"  • {g['name']} ({g['platform']}) → {g['url']}" for g in games]
+                full_response += "\n\n🎮 Quer jogar? Confira os jogos disponíveis:\n" + "\n".join(lines)
+            else:
+                lines = [f"  • {g['name']} ({g['platform']}) → {g['url']}" for g in games]
+                full_response += "\n\n🎮 Want to play? Check available games:\n" + "\n".join(lines)
+
+        return full_response, best_topic, entities
+
+    
+    def load_game_map(self):
+        with open("game_map.json", "r", encoding="utf-8") as f:
+            game_map = json.load(f)
+
+
+        try:
+            import requests as req
+            tunnels = req.get("http://127.0.0.1:4040/api/tunnels", timeout=3).json()
+            base_url = tunnels["tunnels"][0]["public_url"]
+            print(f"[NGROK] URL pública detectada: {base_url}")
+        except Exception:
+            base_url = "http://localhost:8000"
+            print("[NGROK] ngrok não encontrado, usando localhost")
+
+        for key, games in game_map.items():
+            for game in games:
+                if "url" in game:
+                    game["url"] = base_url + game["url"]
+
+        return game_map
+
+    def find_related_game(self, entities, top_blocks, language):
+
+        topics_dos_blocos = [b["topic"].lower() for b in top_blocks]
+        candidates = [re.sub(r'[^\w\s]', '', e).lower().strip() for e in entities] + topics_dos_blocos
+        candidates = [c for c in candidates if c]
+
+        print(f"[DEBUG] candidates={candidates}")           
+        print(f"[DEBUG] game_map keys={list(self.game_map.keys())}")
+        found = {}
+        for candidate in candidates:
+            if candidate in self.game_map:
+                for game in self.game_map[candidate]:
+                    found[game["url"]] = game
+                continue
+            for key, games in self.game_map.items():
+                key_lower = key.lower()
+                if key_lower in candidate or candidate in key_lower:
+                    for game in games:
+                        found[game["url"]] = game
+
+        return list(found.values())

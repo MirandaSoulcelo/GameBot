@@ -73,6 +73,8 @@ def build_knowledge_base():
         # mundos/universos
         ("https://zeldawiki.gg/wiki/Hyrule",                               "Hyrule"),
         ("https://bulbapedia.bulbagarden.net/wiki/Kanto",                  "Kanto Region"),
+        ("https://en.wikipedia.org/wiki/Mega_Man_Zero_(video_game)", "Mega Man"),
+        ("https://en.wikipedia.org/wiki/Street_Fighter", "Street Fighter")
     ]
 
     urls_pt = [
@@ -117,6 +119,8 @@ def build_knowledge_base():
         ("https://pt.wikipedia.org/wiki/Star_Fox",                         "Star Fox"),
         # KH geral (cobre Riku, Kairi e outros secundários)
         ("https://pt.wikipedia.org/wiki/Kingdom_Hearts",                   "Kingdom Hearts"),
+        ("https://pt.wikipedia.org/wiki/Zero_(Mega_Man)", "Mega Man"),
+        ("https://pt.wikipedia.org/wiki/Street_Fighter", "Street Fighter")
     ]
 
     kb_en = empty_kb()
