@@ -258,6 +258,16 @@ Três tabelas em `saves.db`:
 <img width="960" height="468" alt="image" src="https://github.com/user-attachments/assets/d0a174d4-4d0b-454e-97ff-929227d323d8" />
 <img width="1032" height="598" alt="image" src="https://github.com/user-attachments/assets/6f1551d4-2f32-46fc-b18e-34f8908afeaa" />
 
+---
+ 
+## 🙏 Agradecimentos
+ 
+Este projeto não existiria sem o trabalho de pessoas e organizações incríveis:
+ 
+* 🎮 **[EmulatorJS](https://github.com/EmulatorJS/EmulatorJS)** — biblioteca open source que tornou possível rodar emuladores de GBA e DS diretamente no browser, sem nenhum plugin ou instalação pelo usuário
+* 🤗 **[Cardiff NLP](https://huggingface.co/cardiffnlp/twitter-xlm-roberta-base-sentiment)** — pelo modelo `twitter-xlm-roberta-base-sentiment`, que viabilizou a análise de sentimento multilíngue sem precisar treinar nada do zero
+* 🎬 **[Giphy](https://developers.giphy.com/)** — pela API gratuita que trouxe personalidade e contexto visual às respostas do bot
+
 
 
 
