@@ -81,18 +81,29 @@ async def handle_ranking(update: Update, context: ContextTypes.DEFAULT_TYPE):
             " Ainda não há avaliações suficientes para gerar um ranking!"
         )
         return
+    
+    top_game = GAME_DISPLAY_NAMES.get(ranking[0][0], ranking[0][0])
+    gif_url = buscar_gif(top_game)
+    if gif_url:
+        try:
+            await update.message.reply_animation(gif_url)
+        except Exception as e:
+            print(f"[GIF ERROR] {e}")
 
     lines = []
     for i, row in enumerate(ranking):
         game = row[0]
         display_name = GAME_DISPLAY_NAMES.get(game, game)
-        lines.append(
-            f"{i + 1} {display_name}\n"
-        )
+        if i == 0:
+            lines.append(f"{i + 1}. *{display_name}* ⭐")
+        else:
+            lines.append(f"{i + 1}. {display_name}")
 
     await update.message.reply_text(
-        "Top jogos mais bem avaliados pela comunidade:\n\n" + "\n\n".join(lines)
-    )
+        "🏆 Top jogos mais bem avaliados pela comunidade:\n\n" + "\n\n".join(lines),
+        parse_mode="Markdown"
+        )
+
 
 async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE):
     file = await update.message.voice.get_file()
@@ -276,6 +287,13 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             print(f"[GIF ERROR] {e}")
 
     await update.message.reply_text(resposta)
+
+def get_game_url(game_slug):
+    for key, games in bot_nlp.game_map.items():
+        for g in games:
+            if g["url"].endswith(f"/play/{game_slug}"):
+                return g["url"]
+    return ""
 
 def get_ranking():
     conn = sqlite3.connect("saves.db")
