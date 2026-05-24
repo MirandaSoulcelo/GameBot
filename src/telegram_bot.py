@@ -16,6 +16,7 @@ from dictConfig import GAME_DISPLAY_NAMES, FEEDBACK_KEYWORDS
 
 load_dotenv()
 
+
 def looks_like_feedback(text, language):
 
     text = text.lower()
