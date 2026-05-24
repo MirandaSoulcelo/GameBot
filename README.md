@@ -249,5 +249,18 @@ Três tabelas em `saves.db`:
 * Algumas screenshots como prévia dessa mirabolância mirabolótica
 
 <img width="1059" height="459" alt="image" src="https://github.com/user-attachments/assets/ea97d73d-dab0-4ab6-b96f-766dd0639682" />
-<img width="877" height="776" alt="image" src="https://github.com/user-attachments/assets/6bc9af0b-5570-4865-b249-25ffc978cd0a" />
-<img width="1437" height="838" alt="image" src="https://github.com/user-attachments/assets/1a905c99-dd78-40e6-9786-e9b0d3cd8864" />
+<img width="1438" height="652" alt="image" src="https://github.com/user-attachments/assets/bb785dbd-eb50-47d4-adc4-9757a15df5c5" />
+
+<img width="1394" height="766" alt="image" src="https://github.com/user-attachments/assets/8661a37e-776d-443a-96f9-5126f7041915" />
+<img width="1884" height="1059" alt="image" src="https://github.com/user-attachments/assets/1705ed2f-46eb-41f1-a82d-0c971dd98547" />
+<img width="1884" height="1046" alt="image" src="https://github.com/user-attachments/assets/2d42b710-8d19-401b-8c24-8088af7128e8" />
+<img width="1907" height="1005" alt="image" src="https://github.com/user-attachments/assets/f7256ee3-b60d-4992-8ffc-7e9c182e75cc" />
+<img width="959" height="514" alt="image" src="https://github.com/user-attachments/assets/920e4da5-4f0f-4ac0-8fe0-c3c5773fd6c4" />
+<img width="960" height="468" alt="image" src="https://github.com/user-attachments/assets/d0a174d4-4d0b-454e-97ff-929227d323d8" />
+<img width="1032" height="598" alt="image" src="https://github.com/user-attachments/assets/6f1551d4-2f32-46fc-b18e-34f8908afeaa" />
+
+
+
+
+
+
