@@ -87,6 +87,10 @@ games = {
         "core": "mgba",
         "rom":  "/roms/gba/Super Mario - Advance2.gba"
     },
+    "The-Legend-Of-Zelda": {
+    "core": "mgba",
+    "rom":  "/roms/gba/Legend of Zelda-TheMinishCap.gba"
+},
     
 }
 

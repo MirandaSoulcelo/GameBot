@@ -7,13 +7,12 @@ from langdetect import detect, detect_langs
 from nltk.corpus import stopwords
 import nltk
 import re
+from dictConfig import FRANCHISE_HINTS
 
 nltk.download('stopwords', quiet=True)
 
 STOPWORDS_PT = set(stopwords.words("portuguese"))
 STOPWORDS_EN = set(stopwords.words("english"))
-
-
 class NLPEngine:
 
     def __init__(self):
@@ -28,6 +27,13 @@ class NLPEngine:
         self.all_blocks_en = self._flatten(self.kb_en)
         self.all_blocks_pt = self._flatten(self.kb_pt)
         self.game_map = self.load_game_map()
+        self.topic_map = self.build_topic_map()
+
+        topics_kh = set(
+            b["topic"] for b in self.all_blocks_en 
+            if "kingdom hearts" in b["text"].lower() or "kingdom hearts" in b["topic"].lower()
+        )
+        print(f"[DEBUG KH TOPICS] {topics_kh}")
 
         print("Motor NLP pronto!\n")
 
@@ -241,9 +247,14 @@ class NLPEngine:
         
 
         best_topic = topics_pool[sorted_idx[0]]
+        print(f"[DEBUG] best_topic={best_topic}")
         full_response = "\n\n".join(results)
 
-        top_blocks = [filtered[idx] for idx in sorted_idx if combined[idx] >= threshold][:top_k]
+        best_score = combined[sorted_idx[0]]
+        top_blocks = [
+            filtered[idx] for idx in sorted_idx
+            if combined[idx] >= max(threshold, best_score * 0.75)
+        ][:top_k]
     
         games = self.find_related_game(entities, top_blocks, language)
 
@@ -280,23 +291,58 @@ class NLPEngine:
         return game_map
 
     def find_related_game(self, entities, top_blocks, language):
-
-        topics_dos_blocos = [b["topic"].lower() for b in top_blocks]
-        candidates = [re.sub(r'[^\w\s]', '', e).lower().strip() for e in entities] + topics_dos_blocos
-        candidates = [c for c in candidates if c]
-
-        print(f"[DEBUG] candidates={candidates}")           
-        print(f"[DEBUG] game_map keys={list(self.game_map.keys())}")
         found = {}
-        for candidate in candidates:
-            if candidate in self.game_map:
-                for game in self.game_map[candidate]:
+
+        # 1. Prioridade: topic_map construído da KB
+        for block in top_blocks:
+            topic = block["topic"].lower().strip()
+            if topic in self.topic_map:
+                for game in self.topic_map[topic]:
                     found[game["url"]] = game
-                continue
-            for key, games in self.game_map.items():
-                key_lower = key.lower()
-                if key_lower in candidate or candidate in key_lower:
-                    for game in games:
-                        found[game["url"]] = game
+
+        # 2. Fallback: game_map direto por entidades
+        if not found:
+            candidates = [re.sub(r'[^\w\s]', '', e).lower().strip() for e in entities]
+            candidates = [c for c in candidates if c and len(c) > 2]
+            for candidate in candidates:
+                for key, games in self.game_map.items():
+                    if key in candidate or candidate in key:
+                        for game in games:
+                            found[game["url"]] = game
 
         return list(found.values())
+        
+    def build_topic_map(self):
+        topic_map = {}
+        all_blocks = self.all_blocks_pt + self.all_blocks_en
+
+        # inverte o FRANCHISE_HINTS para lookup rápido: "roxas" -> "kingdom hearts(odeio python)"
+        character_to_franchise = {}
+        for franchise, characters in FRANCHISE_HINTS.items():
+            for char in characters:
+                character_to_franchise[char] = franchise
+
+        for block in all_blocks:
+            topic = block["topic"].lower().strip()
+            if topic in topic_map:
+                continue
+
+            # 1. string match direto
+            for key, games in self.game_map.items():
+                if key in topic or topic in key:
+                    topic_map[topic] = games
+                    print(f"[TOPIC MAP] '{topic}' → '{key}' (string match)")
+                    break
+
+            if topic in topic_map:
+                continue
+
+            # 2. lookup por personagem conhecido
+            if topic in character_to_franchise:
+                franchise = character_to_franchise[topic]
+                if franchise in self.game_map:
+                    topic_map[topic] = self.game_map[franchise]
+                    print(f"[TOPIC MAP] '{topic}' → '{franchise}' (franchise hint)")
+
+        print(f"[TOPIC MAP] {len(topic_map)} topics mapeados")
+        return topic_map
