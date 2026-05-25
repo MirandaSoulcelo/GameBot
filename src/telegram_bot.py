@@ -56,6 +56,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         " Consulte os 5 jogos mais bem avaliados pela comunidade com /ranking"
     )
 
+def transcribe_audio(file_path):
+    result = model.transcribe(file_path)
+    return result["text"]
+
 
 def buscar_gif_inteligente(topic, entities):
     gif = buscar_gif(topic)

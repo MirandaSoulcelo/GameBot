@@ -9,3 +9,10 @@ __pycache__/
 # Bases de conhecimento (são grandes e regeneráveis com o builder)
 knowledge_base_en.json
 knowledge_base_pt.json
+
+
+roms/*
+!roms/gba/
+!roms/ds/
+!roms/gba/.gitkeep
+!roms/ds/.gitkeep
