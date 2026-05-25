@@ -16,3 +16,8 @@ roms/*
 !roms/ds/
 !roms/gba/.gitkeep
 !roms/ds/.gitkeep
+
+saves.db
+*.sav
+*.srm
+*.state
