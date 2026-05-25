@@ -37,6 +37,7 @@ O **GameBot** é um chatbot para Telegram capaz de responder perguntas sobre per
 
 * Algumas screenshots como prévia dessa mirabolância mirabolótica
 
+<img width="960" height="468" alt="image" src="https://github.com/user-attachments/assets/d0a174d4-4d0b-454e-97ff-929227d323d8" />
 <img width="1544" height="867" alt="image" src="https://github.com/user-attachments/assets/7594de70-1ecf-4eb7-b545-2ff5e980cfef" />
 <img width="1518" height="808" alt="image" src="https://github.com/user-attachments/assets/ea4077cb-4bbc-492e-a4fa-904d4e862a54" />
 
@@ -45,7 +46,7 @@ O **GameBot** é um chatbot para Telegram capaz de responder perguntas sobre per
 <img width="1394" height="766" alt="image" src="https://github.com/user-attachments/assets/8661a37e-776d-443a-96f9-5126f7041915" />
 <img width="1884" height="1059" alt="image" src="https://github.com/user-attachments/assets/1705ed2f-46eb-41f1-a82d-0c971dd98547" />
 <img width="1907" height="1005" alt="image" src="https://github.com/user-attachments/assets/f7256ee3-b60d-4992-8ffc-7e9c182e75cc" />
-<img width="960" height="468" alt="image" src="https://github.com/user-attachments/assets/d0a174d4-4d0b-454e-97ff-929227d323d8" />
+
 <img width="1150" height="466" alt="image" src="https://github.com/user-attachments/assets/7d639692-91f6-4877-b9d6-4307894f11f5" />
 ---
 
